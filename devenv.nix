@@ -1,11 +1,11 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, inputs, ... }:
 
 {
   languages.javascript.enable = true;
   languages.javascript.package = lib.mkDefault pkgs.nodejs-18_x;
 
   languages.php.enable = true;
-  languages.php.package = lib.mkDefault (pkgs.php.buildEnv {
+  languages.php.package = lib.mkDefault (inputs.phps.packages.${builtins.currentSystem}.php81.buildEnv {
     extensions = { all, enabled }: with all; enabled ++ [ redis ];
     extraConfig = ''
       memory_limit = 2G
